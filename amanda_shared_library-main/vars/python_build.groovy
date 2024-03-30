@@ -29,6 +29,7 @@ def call(service) {
                 }
             }
 
+            // Safety check is used to check Python project's dependencies (requirements.txt, venv) against known security vulnerabilies listed in PyPI security advisories.
             stage ('Security Scan - Python Dependencies') {
                 steps {
                     dir ("${WORKSPACE}/${service}") {
@@ -37,6 +38,9 @@ def call(service) {
                 }
             }
 
+            // Bandit is a security linter for Python source code, allowing automatic scans of Python codebases for potential security vulnerabilities.  
+            // It is used to detect hardcoded passwords and secrets, insecure cryptographic algorithms, code/command/SQL injection vulnerabilities,
+            // insecure built-in functions and modules, as well as improper handling of sensitive data/file. 
             stage ('Security Scan - Python Code') {
                 steps {
                     dir ("${WORKSPACE}/${service}") {
